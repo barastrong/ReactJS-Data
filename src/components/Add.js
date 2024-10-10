@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { ref as dbRef, push } from 'firebase/database';
 import { Database, storage } from '../firebase';
-import { useNavigate, Link  } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate
 import './Add.css';
 
 const UploadForm = () => {
     const [nama, setNama] = useState('');
-    const [jumlah, setJumlah] = useState('');
+    const [keterangan, setKeterangan] = useState(''); // Menggunakan state untuk 'keterangan'
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState('');
+    const [isUploading, setIsUploading] = useState(false); // New state for loading spinner
     const navigate = useNavigate(); // Initialize navigate
 
     // Handle file input for image
@@ -24,7 +25,9 @@ const UploadForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        if (!nama || !jumlah || !image) {
+        setIsUploading(true); // Start showing spinner or loading message
+
+        if (!nama || !keterangan || !image) {
             setMessage("Please fill in all fields and select an image.");
             return;
         }
@@ -48,20 +51,21 @@ const UploadForm = () => {
                 // Step 2: Get image URL once upload is complete
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((imageUrl) => {
-                        // Step 3: Save Nama, Jumlah, and Image URL to Firebase Realtime Database
+                        // Step 3: Save Nama, Keterangan, and Image URL to Firebase Realtime Database
                         const userRef = dbRef(Database, 'user');
                         return push(userRef, {
                             Nama: nama,
-                            Jumlah: jumlah,
+                            Keterangan: keterangan, // Menggunakan state 'keterangan'
                             imageUrl: imageUrl
                         });
                     })
                     .then(() => {
                         setMessage('Data uploaded successfully!');
                         setNama('');
-                        setJumlah('');
+                        setKeterangan(''); // Mengosongkan input 'Keterangan'
                         setImage(null);
                         setProgress(0);
+                        setIsUploading(false); // Stop showing spinner after successful upload
                         navigate('/home'); // Redirect to homepage after successful upload
                     })
                     .catch((error) => {
@@ -74,7 +78,7 @@ const UploadForm = () => {
 
     return (
         <div>
-                        <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
+            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
                 <Link to="/home" style={{ marginRight: '10px' }}>Home</Link>
                 <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
                 <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
@@ -96,11 +100,11 @@ const UploadForm = () => {
                 </label>
                 <br />
                 <label>
-                    Jumlah:
+                    Keterangan:
                     <input 
-                        type="number" 
-                        value={jumlah} 
-                        onChange={(e) => setJumlah(e.target.value)} 
+                        type="text" 
+                        value={keterangan} 
+                        onChange={(e) => setKeterangan(e.target.value)} 
                         required 
                     />
                 </label>
@@ -115,7 +119,9 @@ const UploadForm = () => {
                     />
                 </label>
                 <br />
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={isUploading}>
+                    {isUploading ? 'Uploading...' : 'Submit'}
+                </button>
             </form>
 
             {/* Display upload progress */}

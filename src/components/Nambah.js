@@ -29,23 +29,33 @@ const Home = () => {
     }, []);
 
     // Fungsi untuk menambah jumlah
-    const handleAddJumlah = (userId, currentJumlah) => {
-        const newJumlah = currentJumlah + 1; // Tambah 1 ke jumlah saat ini
-
-        // Update jumlah di Firebase
+    const handleAddJumlah = (userId) => {
+        // Ambil data terbaru dari Firebase untuk user yang dipilih
         const userRef = ref(Database, `user/${userId}`);
-        update(userRef, { Jumlah: newJumlah })
-            .then(() => {
-                console.log('Jumlah berhasil ditambahkan');
-                setUser((prevUsers) =>
-                    prevUsers.map((user) =>
-                        user.id === userId ? { ...user, Jumlah: newJumlah } : user
-                    )
-                );
-                navigate('/logout'); // Redirect to the Logout page
+        get(userRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const currentJumlah = snapshot.val().Jumlah || 0; // Dapatkan Jumlah terbaru
+                    const newJumlah = currentJumlah + 1; // Tambah 1 ke jumlah saat ini
+
+                    // Update jumlah di Firebase
+                    update(userRef, { Jumlah: newJumlah })
+                        .then(() => {
+                            console.log('Jumlah berhasil ditambahkan');
+                            setUser((prevUsers) =>
+                                prevUsers.map((user) =>
+                                    user.id === userId ? { ...user, Jumlah: newJumlah } : user
+                                )
+                            );
+                            navigate('/logout'); // Redirect to the Logout page
+                        })
+                        .catch((error) => {
+                            console.error('Error updating data: ', error);
+                        });
+                }
             })
             .catch((error) => {
-                console.error('Error updating data: ', error);
+                console.error('Error getting current jumlah: ', error);
             });
     };
 
@@ -77,12 +87,12 @@ const Home = () => {
                             {/* Nama dan Jumlah di bawah gambar */}
                             <div className="user-info">
                                 <h3>{user.Nama}</h3>
-                                <p>Jumlah: {user.Jumlah}</p>
+                                <p>{user.Keterangan}</p>
                             </div>
 
                             {/* Button untuk menambah jumlah */}
                             <div className="button-container">
-                                <button className="add-button" onClick={() => handleAddJumlah(user.id, user.Jumlah)}>Yes</button>
+                                <button className="add-button" onClick={() => handleAddJumlah(user.id)}>Yes</button>
                                 <button className="cancel-button" onClick={handleCancelAddJumlah}>No</button>
                             </div>
                         </div>

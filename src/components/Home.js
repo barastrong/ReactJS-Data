@@ -12,8 +12,8 @@ const Home = () => {
     const [chartData, setChartData] = useState(null);  // Data for Bar Chart
     const [pieData, setPieData] = useState(null);      // Data for Pie Chart
 
-    useEffect(() => {
-        // Fetch user data including the image URL from Firebase Realtime Database
+    // Function to fetch data from Firebase
+    const fetchData = () => {
         const userRef = ref(Database, 'user');
         get(userRef)
             .then((snapshot) => {
@@ -77,6 +77,17 @@ const Home = () => {
             .catch((error) => {
                 console.log(error);
             });
+    };
+
+    // UseEffect with setInterval for updating data every 2 minutes (120000 ms)
+    useEffect(() => {
+        fetchData(); // Initial fetch
+
+        const intervalId = setInterval(() => {
+            fetchData(); // Fetch data again every 2 minutes
+        }, 20); // 120000 ms = 2 minutes
+
+        return () => clearInterval(intervalId); // Clear the interval when the component is unmounted
     }, []);
 
     return (
