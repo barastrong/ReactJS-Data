@@ -1,12 +1,16 @@
-# Untuk Run Task
+# Run Task
 ```
   npm start
 ```
 task ini merupakan untuk menjalakan react js anda 
 
-# Yang harus di install untuk menjalakan folder ini
+# Install Firebase
 ```
   npm install firebase
+```
+Dengan Menginstall firebase maka anda bisa mengkoneksikan data kalian ke vscode dengan membuat code untuk menjalakan data tersebut
+# Install chart
+```
   npm install chart.js react-chartjs-2
 ```
-Dengan instal itu maka anda bisa menjalankan firebase dan anda dan anda bisa membuat diagram batang dan diagram lingkaran
+Dengan Menginstall Chart maka anda bisa membuat diagram batang dan diagram lingkaran dengan menggunakan data atau apapun lainnya
