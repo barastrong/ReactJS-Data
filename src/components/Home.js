@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { get, ref } from 'firebase/database';
 import { Database } from '../firebase';
 import { Bar, Pie } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
 // Register the necessary components of Chart.js
@@ -80,6 +81,15 @@ const Home = () => {
 
     return (
         <div>
+            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
+                <Link to="/home" style={{ marginRight: '10px' }}>Home</Link>
+                <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
+                <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
+                <Link to="/delete" style={{ marginRight: '10px' }}>Delete Data</Link>
+                <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
+                <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>
+                <Link to="/admin" style={{ marginRight: '10px' }}>Admin Table</Link>
+            </nav>
             {/* Flex container for Bar and Pie Charts */}
             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginTop: '30px' }}>
                 {/* Render Bar Chart */}

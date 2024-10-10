@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { ref as dbRef, push } from 'firebase/database';
 import { Database, storage } from '../firebase';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Add.css';
 
 const UploadForm = () => {
@@ -10,6 +11,7 @@ const UploadForm = () => {
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState('');
+    const navigate = useNavigate(); // Initialize navigate
 
     // Handle file input for image
     const handleImageChange = (e) => {
@@ -60,6 +62,7 @@ const UploadForm = () => {
                         setJumlah('');
                         setImage(null);
                         setProgress(0);
+                        navigate('/home'); // Redirect to homepage after successful upload
                     })
                     .catch((error) => {
                         console.error("Error saving data to the database:", error);

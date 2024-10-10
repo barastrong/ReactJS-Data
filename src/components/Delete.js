@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { get, ref, remove } from 'firebase/database';
 import { Database } from '../firebase'; // Pastikan Firebase sudah dikonfigurasi
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import './Delete.css';
 
 const Home = () => {
     const [user, setUser] = useState([]);
     const [selectedUser, setSelectedUser] = useState(''); // State untuk menyimpan nama user yang dipilih
+    const navigate = useNavigate(); // Initialize navigate
 
     // Mengambil data dari Firebase saat komponen pertama kali di-render
     useEffect(() => {
@@ -38,6 +41,7 @@ const Home = () => {
                     // Menghapus user dari state lokal
                     setUser(user.filter((u) => u.id !== selectedUserData.id));
                     setSelectedUser(''); // Reset pilihan
+                    navigate('/home'); // Redirect to homepage after deletion
                 })
                 .catch((error) => {
                     console.error('Error deleting data: ', error);

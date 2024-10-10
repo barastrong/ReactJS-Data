@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { get, ref, update } from 'firebase/database';
 import { Database } from '../firebase'; // Asumsi Firebase sudah dikonfigurasi
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Home.css'; // Pastikan CSS diimpor
 
 const Home = () => {
     const [user, setUser] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     // Mengambil data dari Firebase
     useEffect(() => {
@@ -40,6 +42,7 @@ const Home = () => {
                         user.id === userId ? { ...user, Jumlah: newJumlah } : user
                     )
                 );
+                navigate('/logout'); // Redirect to the Logout page
             })
             .catch((error) => {
                 console.error('Error updating data: ', error);
