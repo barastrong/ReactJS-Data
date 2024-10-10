@@ -1,0 +1,65 @@
+.upload-form-container {
+    max-width: 400px; /* Lebar maksimal kontainer */
+    margin: 0 auto; /* Pusatkan kontainer */
+    padding: 20px; /* Ruang di dalam kontainer */
+    font-family: Arial, sans-serif; /* Font kontainer */
+    background-color: #ffffff; /* Latar belakang putih untuk kontainer */
+    border-radius: 10px; /* Sudut membulat untuk kontainer */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+}
+
+h1 {
+    text-align: center; /* Pusatkan judul */
+    color: #333; /* Warna teks judul */
+    margin-bottom: 20px; /* Margin di bawah judul */
+}
+
+label {
+    display: block; /* Tampilkan label sebagai blok */
+    margin: 10px 0 5px; /* Margin untuk label */
+    font-weight: bold; /* Tebalkan teks label */
+    color: #555; /* Warna teks label */
+}
+
+input[type="text"], 
+input[type="number"], 
+input[type="file"] {
+    width: 100%; /* Lebar penuh untuk input */
+    padding: 10px; /* Ruang di dalam input */
+    margin-top: 5px; /* Ruang di atas input */
+    border: 1px solid #ccc; /* Border abu-abu muda */
+    border-radius: 5px; /* Sudut membulat untuk input */
+    font-size: 14px; /* Ukuran font untuk input */
+    transition: border-color 0.3s; /* Transisi untuk perubahan border */
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus {
+    border-color: #28a745; /* Warna border saat fokus */
+    outline: none; /* Hilangkan outline default */
+}
+
+button {
+    background-color: #28a745; /* Warna hijau untuk tombol */
+    color: white; /* Teks putih */
+    border: none; /* Tanpa border */
+    border-radius: 5px; /* Sudut membulat untuk tombol */
+    padding: 10px; /* Ruang di dalam tombol */
+    cursor: pointer; /* Ubah kursor saat hover */
+    font-size: 14px; /* Ukuran font untuk tombol */
+    margin-top: 15px; /* Margin di atas tombol */
+    display: block; /* Tampilkan tombol sebagai blok */
+    width: 100%; /* Lebar penuh untuk tombol */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+}
+
+button:hover {
+    background-color: #218838; /* Warna hijau gelap saat hover */
+}
+
+p {
+    text-align: center; /* Pusatkan teks pesan */
+    margin-top: 10px; /* Margin di atas pesan */
+    color: #555; /* Warna teks untuk pesan */
+    font-size: 14px; /* Ukuran font untuk pesan */
+}

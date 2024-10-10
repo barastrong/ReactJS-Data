@@ -1,0 +1,76 @@
+.home-container {
+    max-width: 800px; /* Lebar maksimal kontainer */
+    margin: 0 auto; /* Pusatkan kontainer */
+    padding: 20px; /* Ruang di dalam kontainer */
+    font-family: Arial, sans-serif; /* Font kontainer */
+    background-color: #f9f9f9; /* Latar belakang kontainer */
+    border-radius: 8px; /* Sudut membulat untuk kontainer */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+}
+
+.user-list {
+    display: flex; /* Susun kartu pengguna secara fleksibel */
+    flex-wrap: wrap; /* Izinkan kartu membungkus saat layar lebih kecil */
+    gap: 20px; /* Jarak antara kartu pengguna */
+}
+
+.user-card {
+    background-color: #fff; /* Latar belakang putih untuk kartu pengguna */
+    border: 1px solid #ddd; /* Border abu-abu muda */
+    border-radius: 8px; /* Sudut membulat untuk kartu pengguna */
+    padding: 15px; /* Ruang di dalam kartu pengguna */
+    width: 200px; /* Lebar tetap untuk kartu pengguna */
+    text-align: center; /* Pusatkan teks */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+    transition: transform 0.2s; /* Transisi untuk efek zoom */
+}
+
+.user-card:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+.user-image {
+    width: 100px; /* Ukuran gambar */
+    height: 100px; /* Ukuran gambar */
+    object-fit: cover; /* Memastikan gambar terpotong dengan baik */
+    border-radius: 50%; /* Membuat gambar bulat */
+    margin-bottom: 10px; /* Ruang di bawah gambar */
+}
+
+.user-info {
+    margin-top: 10px; /* Ruang di atas info pengguna */
+}
+
+.button-container {
+    display: flex; /* Menggunakan flexbox untuk tombol */
+    justify-content: center; /* Pusatkan tombol */
+    margin-top: 10px; /* Ruang di atas tombol */
+}
+
+.add-button, .cancel-button {
+    padding: 8px 12px; /* Ruang dalam tombol */
+    border-radius: 5px; /* Sudut membulat untuk tombol */
+    cursor: pointer; /* Ubah kursor saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+}
+
+.add-button {
+    background-color: #28a745; /* Warna hijau untuk tombol Yes */
+    color: white; /* Teks putih */
+    border: none; /* Tanpa border */
+    margin-right: 10px; /* Ruang antara tombol Yes dan No */
+}
+
+.add-button:hover {
+    background-color: #218838; /* Warna hijau gelap saat hover */
+}
+
+.cancel-button {
+    background-color: #dc3545; /* Warna merah untuk tombol No */
+    color: white; /* Teks putih */
+    border: none; /* Tanpa border */
+}
+
+.cancel-button:hover {
+    background-color: #c82333; /* Warna merah gelap saat hover */
+}
