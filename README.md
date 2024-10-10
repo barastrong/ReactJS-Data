@@ -2,7 +2,7 @@
 ```
   npm start
 ```
-task ini merupakan untuk menjalakan react js anda 
+Task ini merupakan Task untuk menjalankan ReactJS Kalian
 
 # Install Firebase
 ```
