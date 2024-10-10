@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';  // Correct path to Home component
 import Add from './components/Add';    // Correct path to Add component
 import Nambah from './components/Nambah'; // Correct path to Nambah component
-import Delete from './components/Delete'
+import Delete from './components/Delete';
+import Login from './components/Login'
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                     <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
                     <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
                     <Link to="/delete" style={{ marginRight: '10px' }}>Delete Data</Link>
+                    <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>
                 </nav>
 
                 {/* Route Definitions */}
@@ -22,7 +24,8 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/add" element={<Add />} />
                     <Route path="/nambah" element={<Nambah />} />
-                    <Route path="/Delete" element={<Delete />} />
+                    <Route path="/delete" element={<Delete />} />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </div>
         </Router>
