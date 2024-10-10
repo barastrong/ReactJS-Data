@@ -28,8 +28,7 @@ const AdminPage = () => {
 
     return (
         <div className="admin-container">
-            <h1>Admin Dashboard</h1>
-            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
+                        <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
                 <Link to="/home" style={{ marginRight: '10px' }}>Home</Link>
                 <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
                 <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
@@ -38,6 +37,7 @@ const AdminPage = () => {
                 <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>
                 <Link to="/admin" style={{ marginRight: '10px' }}>Admin Table</Link>
             </nav>
+            <h1>Admin Dashboard</h1>
             <table className="user-table">
                 <thead>
                     <tr>
