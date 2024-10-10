@@ -55,7 +55,8 @@ const UploadForm = () => {
                         const userRef = dbRef(Database, 'user');
                         return push(userRef, {
                             Nama: nama,
-                            Keterangan: keterangan, // Menggunakan state 'keterangan'
+                            Jumlah:0,
+                            Keterangan: keterangan,
                             imageUrl: imageUrl
                         });
                     })

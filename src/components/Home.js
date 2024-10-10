@@ -92,7 +92,8 @@ const Home = () => {
 
     return (
         <div>
-            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
+            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
+            <img src="https://blob.cloudcomputing.id/images/cff1b270-8f1e-49cc-a83e-dee70292f361/halodoc-l-min.jpg" alt="Logo" style={{ height: '50px', marginRight: '20px' }} />
                 <Link to="/home" style={{ marginRight: '10px' }}>Home</Link>
                 <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
                 <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
