@@ -5,44 +5,60 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Import the CSS file
 
 const Login = () => {
-    const [nama, setNama] = useState('');
+    const [nisn, setNisn] = useState(''); // nisn input
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
+        // Mencegah apabila terjadi relog form
         e.preventDefault();
+        setErrorMessage('');
 
-        // Reference to the 'Login' node in Firebase
         const loginRef = dbRef(Database, 'Login');
 
         get(loginRef).then((snapshot) => {
             if (snapshot.exists()) {
                 const users = snapshot.val();
+
+                // Mengambil data dari firebase dengan database bernama "users"
+                console.log("Users from Firebase:", users);
+
+                // Menjadikan nisn menjadi integer karena dalam database yang tersimpan merupakan integer
+                const inputNisn = String(nisn);
+
+                // Mencari user yang sama dengan nomer input yang di form
                 const user = Object.values(users).find(
-                    (u) => u.Nama === nama && u.Password === password
+                    (u) => String(u.Nisn) === inputNisn && u.Password === password
                 );
 
                 if (user) {
-                    // Successful login: Update isLoggedIn status
-                    const userKey = Object.keys(users).find(key => users[key].Nama === nama);
+                    console.log("User found:", user);
+
+                    // Update untuk isLoggedin 
+                    const userKey = Object.keys(users).find(key => String(users[key].Nisn) === inputNisn);
                     const userRef = dbRef(Database, `Login/${userKey}`);
 
                     update(userRef, { isLoggedIn: true }).then(() => {
-                        // Redirect based on role
+                        // Mengarahkan user seusai dengan Role mereka
                         if (user.Role === 'admin') {
                             navigate('/home');
-                        } else  {
+                        } else {
                             navigate('/nambah');
                         }
+                    }).catch((error) => {
+                        setErrorMessage('Failed to update login status. Please try again.');
+                        console.error('Update error:', error);
                     });
                 } else {
-                    setErrorMessage('Invalid username or password.');
+                    console.log("No matching user found.");
+                    setErrorMessage('Invalid NISN or password.');
                 }
             } else {
                 setErrorMessage('No users found in the database.');
             }
         }).catch((error) => {
+            setErrorMessage('Error occurred during login. Please try again.');
             console.error('Error during login:', error);
         });
     };
@@ -52,11 +68,11 @@ const Login = () => {
             <h1>Login</h1>
             <form onSubmit={handleLogin}>
                 <label>
-                    Nama:
+                    NISN:
                     <input 
-                        type="text" 
-                        value={nama} 
-                        onChange={(e) => setNama(e.target.value)} 
+                        type="text"  
+                        value={nisn} 
+                        onChange={(e) => setNisn(e.target.value)} 
                         required 
                     />
                 </label>

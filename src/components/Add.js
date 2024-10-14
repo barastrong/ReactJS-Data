@@ -2,44 +2,44 @@ import React, { useState } from 'react';
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { ref as dbRef, push } from 'firebase/database';
 import { Database, storage } from '../firebase';
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, Link } from 'react-router-dom';
 import './Add.css';
 
 const UploadForm = () => {
     const [nama, setNama] = useState('');
-    const [keterangan, setKeterangan] = useState(''); // Menggunakan state untuk 'keterangan'
+    const [keterangan, setKeterangan] = useState('');
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState('');
-    const [isUploading, setIsUploading] = useState(false); // New state for loading spinner
-    const navigate = useNavigate(); // Initialize navigate
+    const [isUploading, setIsUploading] = useState(false); // Untuk Loading Spinner
+    const navigate = useNavigate(); // Mengarahkan setelah di upload
 
-    // Handle file input for image
+    // Handle untuk input Gambar
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
         }
     };
 
-    // Handle form submission
+    // Handle untuk Submit
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        setIsUploading(true); // Start showing spinner or loading message
+        setIsUploading(true); // Memulai loading untuk proggres yang sudah di upload
 
         if (!nama || !keterangan || !image) {
             setMessage("Please fill in all fields and select an image.");
             return;
         }
 
-        // Step 1: Upload image to Firebase Storage
+        // Step 1: Mengupload image ke Firebase Store
         const imageRef = storageRef(storage, `images/${image.name}`);
         const uploadTask = uploadBytesResumable(imageRef, image);
 
-        // Monitor upload progress
+        // Memonitoring agar upload success
         uploadTask.on('state_changed', 
             (snapshot) => {
-                // Get task progress by percentage
+                // Mendapatkan presentase data yang sudah di upload
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setProgress(progress);
             },
@@ -48,10 +48,10 @@ const UploadForm = () => {
                 setMessage("Error uploading the image.");
             },
             () => {
-                // Step 2: Get image URL once upload is complete
+                // Step 2: Mengambil URL Gambar setelah confirm succesfull
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((imageUrl) => {
-                        // Step 3: Save Nama, Keterangan, and Image URL to Firebase Realtime Database
+                        // Step 3: Menyimpan Nama, Keterangan, and Image URL to Firebase Realtime Database
                         const userRef = dbRef(Database, 'user');
                         return push(userRef, {
                             Nama: nama,
@@ -66,8 +66,8 @@ const UploadForm = () => {
                         setKeterangan(''); // Mengosongkan input 'Keterangan'
                         setImage(null);
                         setProgress(0);
-                        setIsUploading(false); // Stop showing spinner after successful upload
-                        navigate('/home'); // Redirect to homepage after successful upload
+                        setIsUploading(false); // Menghentikan Loading setelah Uploading
+                        navigate('/home');
                     })
                     .catch((error) => {
                         console.error("Error saving data to the database:", error);
@@ -125,10 +125,8 @@ const UploadForm = () => {
                 </button>
             </form>
 
-            {/* Display upload progress */}
+            {/* Display untuk upload proggress */}
             {progress > 0 && <p>Upload Progress: {Math.round(progress)}%</p>}
-
-            {/* Display message */}
             {message && <p>{message}</p>}
         </div>
     );

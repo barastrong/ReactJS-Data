@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { get, ref, remove } from 'firebase/database';
-import { Database } from '../firebase'; // Pastikan Firebase sudah dikonfigurasi
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate
+import { Database } from '../firebase';
+import { useNavigate, Link } from 'react-router-dom';
 import './Delete.css';
 
-const Home = () => {
+const Delete = () => {
     const [user, setUser] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(''); // State untuk menyimpan nama user yang dipilih
-    const navigate = useNavigate(); // Initialize navigate
+    const [selectedUser, setSelectedUser] = useState('');
+    const navigate = useNavigate();
 
-    // Mengambil data dari Firebase saat komponen pertama kali di-render
     useEffect(() => {
         const userRef = ref(Database, 'user');
         get(userRef)
@@ -29,7 +28,6 @@ const Home = () => {
             });
     }, []);
 
-    // Fungsi untuk menghapus data pengguna
     const handleDelete = () => {
         const selectedUserData = user.find((u) => u.Nama === selectedUser);
 
@@ -38,10 +36,9 @@ const Home = () => {
             remove(userRef)
                 .then(() => {
                     console.log('Data berhasil dihapus');
-                    // Menghapus user dari state lokal
                     setUser(user.filter((u) => u.id !== selectedUserData.id));
-                    setSelectedUser(''); // Reset pilihan
-                    navigate('/home'); // Redirect to homepage after deletion
+                    setSelectedUser('');
+                    navigate('/home');
                 })
                 .catch((error) => {
                     console.error('Error deleting data: ', error);
@@ -53,7 +50,7 @@ const Home = () => {
 
     return (
         <div>
-                        <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
+            <nav style={{ padding: '10px', background: '#f0f0f0', marginBottom: '20px' }}>
                 <Link to="/home" style={{ marginRight: '10px' }}>Home</Link>
                 <Link to="/add" style={{ marginRight: '10px' }}>Add Data</Link>
                 <Link to="/nambah" style={{ marginRight: '10px' }}>Nambah Data</Link>
@@ -79,7 +76,6 @@ const Home = () => {
             </button>
 
             <h2>Data Pengguna</h2>
-            {/* Menampilkan data pengguna */}
             <div>
                 {user.length > 0 ? (
                     user.map((user) => (
@@ -96,4 +92,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Delete;

@@ -40,8 +40,8 @@ const Home = () => {
                     ];
 
                     // Prepare data for the bar chart
-                    const labels = sortedUserArray.map((user) => user.Nama); // Names as labels
-                    const data = sortedUserArray.map((user) => user.Jumlah); // Numbers as data
+                    const labels = sortedUserArray.map((user) => user.Nama); 
+                    const data = sortedUserArray.map((user) => user.Jumlah); 
 
                     // Set data for Bar Chart
                     setChartData({

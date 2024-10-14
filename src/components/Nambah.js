@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { get, ref, update } from 'firebase/database';
-import { Database } from '../firebase'; // Asumsi Firebase sudah dikonfigurasi
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Home.css'; // Pastikan CSS diimpor
+import { Database } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import './Home.css';
 
-const Home = () => {
-    const [user, setUser] = useState([]); 
-    const [selectedUserName, setSelectedUserName] = useState(''); // State for selected user's name
-    const [showModal, setShowModal] = useState(false); // State to control modal visibility
-    const navigate = useNavigate(); // Initialize useNavigate
+const Nambah = () => {
+    const [user, setUser] = useState([]);
+    const [selectedUserName, setSelectedUserName] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
 
-    // Mengambil data dari Firebase
     useEffect(() => {
         const userRef = ref(Database, 'user');
         get(userRef)
@@ -30,17 +29,14 @@ const Home = () => {
             });
     }, []);
 
-    // Fungsi untuk menambah jumlah
     const handleAddJumlah = (userId, userName) => {
-        // Ambil data terbaru dari Firebase untuk user yang dipilih
         const userRef = ref(Database, `user/${userId}`);
         get(userRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    const currentJumlah = snapshot.val().Jumlah ?? 0; // If Jumlah doesn't exist, treat as 0
-                    const newJumlah = currentJumlah + 1; // Tambah 1 ke jumlah saat ini
+                    const currentJumlah = snapshot.val().Jumlah ?? 0;
+                    const newJumlah = currentJumlah + 1;
 
-                    // Update jumlah di Firebase
                     update(userRef, { Jumlah: newJumlah })
                         .then(() => {
                             console.log('Jumlah berhasil ditambahkan');
@@ -50,15 +46,13 @@ const Home = () => {
                                 )
                             );
 
-                            // Set selected user's name and show modal
                             setSelectedUserName(userName);
                             setShowModal(true);
 
-                            // Optionally, you can navigate after a delay or after modal is closed
                             setTimeout(() => {
-                                setShowModal(false); // Hide modal after a few seconds
-                                navigate('/logout'); // Redirect to the Logout page
-                            }, 2000); // 2 seconds delay
+                                setShowModal(false);
+                                navigate('/logout');
+                            }, 2000);
                         })
                         .catch((error) => {
                             console.error('Error updating data: ', error);
@@ -70,7 +64,6 @@ const Home = () => {
             });
     };
 
-    // Fungsi untuk membatalkan penambahan jumlah
     const handleCancelAddJumlah = () => {
         console.log('Penambahan jumlah dibatalkan');
     };
@@ -79,12 +72,10 @@ const Home = () => {
         <div className="home-container">
             <h2>Data Pengguna</h2>
 
-            {/* Menampilkan data pengguna */}
             <div className="user-list">
                 {user.length > 0 ? (
                     user.map((user) => (
                         <div key={user.id} className="user-card">
-                            {/* Menampilkan foto pengguna */}
                             {user.imageUrl ? (
                                 <img
                                     src={user.imageUrl}
@@ -94,14 +85,10 @@ const Home = () => {
                             ) : (
                                 <p>No Image Available</p>
                             )}
-
-                            {/* Nama dan Keterangan di bawah gambar */}
                             <div className="user-info">
                                 <h3>{user.Nama}</h3>
                                 <p>{user.Keterangan}</p>
                             </div>
-
-                            {/* Button untuk menambah jumlah */}
                             <div className="button-container">
                                 <button
                                     className="add-button"
@@ -123,7 +110,6 @@ const Home = () => {
                 )}
             </div>
 
-            {/* Modal pop-up when user selects "Yes" */}
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -136,4 +122,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Nambah;

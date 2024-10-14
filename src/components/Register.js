@@ -1,42 +1,45 @@
 import React, { useState } from 'react';
 import { ref as dbRef, push } from 'firebase/database';
-import { Database } from '../firebase'; // Assuming Firebase is configured
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Database } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
 const Register = () => {
-    const [nama, setNama] = useState('');
+    const [nisn, setNisn] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
-    // Handle form submission for registration
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!nama || !password) {
+        if (!nisn || !password) {
             setErrorMessage("Please fill in all fields.");
             return;
         }
 
-        // Reference to the 'Login' node in Firebase Realtime Database
+        const nisnNumber = Number(nisn);
+
+        if (isNaN(nisnNumber)) {
+            setErrorMessage("NISN must be a valid number.");
+            return;
+        }
+
         const loginRef = dbRef(Database, 'Login');
 
-        // Add new user data to the database with default role 'user'
         push(loginRef, {
-            Nama: nama,
+            Nisn: nisnNumber,
             Password: password,
-            Role: 'user' // Default role is 'user'
+            Role: 'user'
         })
         .then(() => {
             setSuccessMessage('Registration successful! Redirecting to login...');
             setErrorMessage('');
 
-            // Delay for 2 seconds before navigating to login page
             setTimeout(() => {
-                navigate('/login'); // Redirect to login page
+                navigate('/login');
             }, 2000);
         })
         .catch((error) => {
@@ -50,11 +53,11 @@ const Register = () => {
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Nama:
+                    NISN:
                     <input
                         type="text"
-                        value={nama}
-                        onChange={(e) => setNama(e.target.value)}
+                        value={nisn}
+                        onChange={(e) => setNisn(e.target.value)}
                         required
                     />
                 </label>
@@ -72,7 +75,6 @@ const Register = () => {
                 <button type="submit">Register</button>
             </form>
 
-            {/* Display success or error messages */}
             {successMessage && <p className="success-message">{successMessage}</p>}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>

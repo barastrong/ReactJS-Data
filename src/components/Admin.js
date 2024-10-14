@@ -8,7 +8,7 @@ const AdminPage = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        // Fetch users from Firebase Realtime Database
+        // Menampilkan data database yang ada di firebase
         const loginRef = ref(Database, 'Login');
         get(loginRef).then((snapshot) => {
             if (snapshot.exists()) {
@@ -41,7 +41,7 @@ const AdminPage = () => {
             <table className="user-table">
                 <thead>
                     <tr>
-                        <th>Nama</th>
+                        <th>NISN</th>
                         <th>Password</th>
                         <th>Role</th>
                         <th>Login Status</th>
@@ -50,7 +50,7 @@ const AdminPage = () => {
                 <tbody>
                     {users.map((user) => (
                         <tr key={user.id}>
-                            <td>{user.Nama}</td>
+                            <td>{user.Nisn}</td>
                             <td>{user.Password}</td>
                             <td>{user.Role}</td>
                             <td>{user.isLoggedIn ? 'Logged In' : 'Not Logged In'}</td>
